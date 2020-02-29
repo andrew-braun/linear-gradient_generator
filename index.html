@@ -7,13 +7,40 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body id="gradient">
-    <h1>Background Generator</h1>
-    <h2>Select two colors</h2>
-    <input type="color" id="color-1" name="color-1" value="#00ff00">
-    <input type="color" id="color-2" name="color-2" value="#ff0000">
-    <h3 id="gradient-rgba"></h3>
-    
+<body id="body-gradient">
+    <h1>Gradient Generator</h1>
+
+    <main class="main-grid-container">
+        <section id="gradient-settings-container">
+            <div class="direction-button-container">
+                <button class="direction-button" type="button" id="button-top">to top</button>
+                <button class="direction-button" type="button" id="button-right">to right</button>
+                <button class="direction-button" type="button" id="button-bottom">to bottom</button>
+                <button class="direction-button" type="button" id="button-left">to left</button>
+            </div>
+
+            <div id="degrees-container">
+                <label for="direction-degrees">Degrees (0-360)</label>
+                <input id="direction-degrees" name="direction-degrees" type="number" max="360" min="0"></input>
+            </div>
+
+            <h2>Select two colors</h2>
+
+            <div class="color-input-container">
+                <input type="color" id="color-1" name="color-1" value="#b92c27">
+                <input type="color" id="color-2" name="color-2" value="#1565c1">
+        </div>
+        </section>
+
+        <section id="gradient-output-container">
+            
+            <code class="gradient-css" id="hsla-value"><span></span></code>
+            <code class="gradient-css" id="rgba-value"><span></span></code>
+            <code class="gradient-css" id="hex-value"><span></span></code>
+        
+        </section>
+    </main>
+
     <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

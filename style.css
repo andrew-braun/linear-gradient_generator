@@ -1,26 +1,101 @@
+/* Declare variables */
+:root {
+    --copper: hsla(2, 65%, 44%, 1);
+    --blue: hsla(212, 80%, 42%, 1); 
+    --copper-hex: #b92c27;
+    --blue-hex: #1565c1;
+}
+
 body {
     font: 'Raleway', sans-serif;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: .5em;
+    letter-spacing: .5rrem;
     top: 15%;
-    background: linear-gradient(to right, red, yellow);
+    background: linear-gradient(to right, var(--copper-hex), var(--blue-hex));
 }
 
+/* Grid layout */
+
+.main-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#gradient-settings-container {
+    display: flex;
+    flex-direction: column;
+
+    grid-column: 1;
+}
+
+#gradient-output-container {
+    display: flex;
+    flex-direction: column;
+    
+    grid-column: 2;
+
+}
+
+/* General elements */
 h1 {
-    font: 600 3.5em 'Raleway', sans-serif;
+    font: 600 3.5rem 'Raleway', sans-serif;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: .5em;
+    letter-spacing: .5rem;
     width: 100%;
 }
 
-h3 {
-    font: 900 1em 'Raleway', sans-serif;
-    color: rgba(0, 0, 0, 0.5);
+p, label {
+    letter-spacing: normal;
+}
+
+div {
+    margin: 2rem;
+}
+
+/* Codebox */
+code {
+    display: block;
+    width: 90%;
+    margin: 1rem;
+    padding: 1rem;
+
+    border: 3px solid; 
+    border-image: linear-gradient(to left, var(--copper), var(--blue)) 1 / 1 / 0 stretch;
+
+    background-color: hsla(192, 15%, 12%, 0.8);
+
+    font: 700 1rem Monospace, sans-serif;
     text-align: center;
     text-transform: none;
-    letter-spacing: 0.01em;
+    letter-spacing: normal;
+}
+
+code span {
+    background: linear-gradient(to right, var(--copper), var(--blue));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Buttons */
+
+.direction-button-container {
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    display: inline-block;
+    margin: 0.3rem;
+    padding: 1rem;
+    width: 6rem;
+
+    border: none;
+    border-radius: 15px;
 }
