@@ -1,31 +1,62 @@
-let css = document.querySelector("h3");
+/* HTML element selectors */
 let color1 = document.querySelector("#color-1");
-let color2 = document.getElementById("color-2");
-let body = document.querySelector("#gradient");
-let gradientRGBAText = document.querySelector("#gradient-rgba");
+let color2 = document.querySelector("#color-2");
+let gradientDirection = "to right";
 
-gradientRGBAText.textContent = "linear-gradient(" + color1.value + ", " + color2.value + ");";
+const body = document.querySelector("#body-gradient");
 
-function gradientShift() {
-    gradientRGBA();
-    changeBackgroundGradient();
+const gradientText = document.querySelectorAll(".gradient-css span");
+const hslaText = document.querySelector("#hsla-value span");
+const rgbaText = document.querySelector("#rgba-value span");
+const hexText = document.querySelector("#hex-value span");
+
+const codeBox = document.querySelectorAll("code");
+
+/* Set initial gradient value in input boxes */
+
+/* Set initial gradient value in codeboxes */
+for (line of gradientText) {
+    line.textContent = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
 }
 
-function gradientRGBA() {
+/* Main function */
+const gradientShift = () => {
+    /* Create variable for current gradient */
+    let currentGradient = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
+
+    changeBackgroundGradient(currentGradient);
+    changeCodeGradient(currentGradient);
+    changeCodeBoxBorder(currentGradient);
+    changeCodeText(currentGradient);
+}
+
+/* Helper functions */
+const changeBackgroundGradient = (gradientValue) => {
+    /* Change page background to current gradient */
+    body.style.backgroundImage = gradientValue;    
+}
+
+const changeCodeGradient = (gradientValue) => {
+    /* Change every code text field color to current gradient background */
+    for (line of gradientText) {
+        line.style.backgroundImage = gradientValue;
+    }
+}
+
+const changeCodeBoxBorder = (gradientValue) => {
+    /* Change border of codeboxes to current gradient */
+    for (box of codeBox) {
+        box.style.borderImage = `linear-gradient(to left, ${color1.value}, ${color2.value}) 1 / 1 / 0 stretch`;
+    }
+}
+
+const changeCodeText = (gradientValue) => {
+    /* Change text inside codeboxes to current gradient */
+    hslaText.textContent = gradientValue;
+    rgbaText.textContent = gradientValue;
+    hexText.textContent = gradientValue;
     
-
-}
-
-function changeBackgroundGradient() {
-    body.style.backgroundImage = 
-    "linear-gradient(to right, " 
-    + color1.value +", " 
-    + color2.value +")";
-
-    gradientRGBAText.textContent = body.style.backgroundImage + ";";
 }
 
 color1.addEventListener("input", gradientShift);
 color2.addEventListener("input", gradientShift);
-
-gradientRGBA();
