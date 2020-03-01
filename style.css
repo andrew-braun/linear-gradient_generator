@@ -6,6 +6,10 @@
     --blue-hex: #1565c1;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font: 'Raleway', sans-serif;
     color: rgba(0, 0, 0, 0.5);
@@ -90,12 +94,48 @@ code span {
     flex-wrap: wrap;
 }
 
-button {
+.direction-button {
     display: inline-block;
     margin: 0.3rem;
     padding: 1rem;
-    width: 6rem;
+    width: 6.5rem;
 
-    border: none;
+    border-width: 0px 2px 0px 2px;
+    border-style: solid;
+    border-color: transparent;
     border-radius: 15px;
+}
+
+#button-top {
+    background: linear-gradient(to top, var(--blue), white);
+}
+
+#button-right {
+    background: linear-gradient(to right, var(--blue), white);
+    background-size: 102%;
+    background-position-x: -2px;
+}
+
+#button-bottom {
+    background: linear-gradient(to bottom, var(--blue), white);
+}
+
+#button-left {
+    background: linear-gradient(to left, var(--blue), white);
+    background-size: 102%;
+}
+
+.direction-button:hover {
+    border-width: 0px 2px 0px 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 30%;
+}
+
+.direction-button:focus {
+    border-width: 0px 2px 0px 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 30%;
+    font-weight: 600;
 }

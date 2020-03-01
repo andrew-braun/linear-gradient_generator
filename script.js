@@ -1,7 +1,10 @@
 /* HTML element selectors */
 let color1 = document.querySelector("#color-1");
 let color2 = document.querySelector("#color-2");
-let gradientDirection = "to right";
+const buttonTop = document.querySelector("#button-top");
+const buttonRight = document.querySelector("#button-right");
+const buttonBottom = document.querySelector("#button-bottom");
+const buttonLeft = document.querySelector("#button-left");
 
 const body = document.querySelector("#body-gradient");
 
@@ -12,6 +15,7 @@ const hexText = document.querySelector("#hex-value span");
 
 const codeBox = document.querySelectorAll("code");
 
+let gradientDirection = "to right";
 /* Set initial gradient value in input boxes */
 
 /* Set initial gradient value in codeboxes */
@@ -20,17 +24,44 @@ for (line of gradientText) {
 }
 
 /* Main function */
+
 const gradientShift = () => {
     /* Create variable for current gradient */
-    let currentGradient = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
+    let currentDirection = gradientDirection;
+   
+    let currentGradient = `linear-gradient(${currentDirection}, ${color1.value}, ${color2.value})`;
 
     changeBackgroundGradient(currentGradient);
     changeCodeGradient(currentGradient);
     changeCodeBoxBorder(currentGradient);
     changeCodeText(currentGradient);
+
 }
 
 /* Helper functions */
+const directionShift = () => {
+    let direction = "";
+
+    if (event.target == buttonTop) {
+        gradientDirection = "to top";
+        direction = "to top";
+    }
+    else if (event.target == buttonRight) {
+        gradientDirection = "to right";
+        direction = "to right";
+    }
+    else if (event.target == buttonBottom) {
+        gradientDirection = "to bottom";
+        direction = "to bottom";
+    }
+    else if (event.target == buttonLeft) {
+        gradientDirection = "to left";
+        direction = "to left";
+    }
+
+    gradientShift();
+}
+
 const changeBackgroundGradient = (gradientValue) => {
     /* Change page background to current gradient */
     body.style.backgroundImage = gradientValue;    
@@ -60,3 +91,7 @@ const changeCodeText = (gradientValue) => {
 
 color1.addEventListener("input", gradientShift);
 color2.addEventListener("input", gradientShift);
+buttonTop.addEventListener("click", directionShift);
+buttonRight.addEventListener("click", directionShift);
+buttonBottom.addEventListener("click", directionShift);
+buttonLeft.addEventListener("click", directionShift);
