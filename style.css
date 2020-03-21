@@ -61,7 +61,7 @@ div {
 }
 
 input[type="number"] {
-    background-color: var(--blue);
+    background-color: transparent;
     border: 0;
     width: 70%;
     border-radius: 3rem;
