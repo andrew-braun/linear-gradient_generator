@@ -99,9 +99,51 @@ const changeCodeBoxBorder = (gradientValue) => {
 const changeCodeText = (gradientValue) => {
     /* Change text inside codeboxes to current gradient */
     hslaText.textContent = gradientValue;
-    rgbaText.textContent = gradientValue;
+    rgbaText.textContent = `linear-gradient(${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
     hexText.textContent = gradientValue;
     
+}
+
+
+/* Convert between color codes */
+    /* Hex colors */
+const hexColor1 = color1.value
+const hexColor2 = color2.value
+
+    /* hex to rgb */
+const hexToRGBA = (hex) => {
+    let r = 0, g = 0, b = 0, a = 0;
+
+    hex = hex.replace("#", "");
+
+    if (hex.length == 3) {
+        r = "0x" + hex[0] + hex[0];
+        g = "0x" + hex[1] + hex[1];
+        b = "0x" + hex[2] + hex[2]; 
+        a = "0x" + "ff";
+    }
+    else if (hex.length == 4) {
+        r = "0x" + hex[0] + hex[0];
+        g = "0x" + hex[1] + hex[1];
+        b = "0x" + hex[2] + hex[2];
+        a = "0x" + hex[3] + hex[3];
+    }
+    else if (hex.length == 6) {
+        r = "0x" + hex[0] + hex[1];
+        g = "0x" + hex[2] + hex[3];
+        b = "0x" + hex[4] + hex[5];
+        a = "0x" + "ff";
+    }
+    else if (hex.length == 8) {
+        r = "0x" + hex[0] + hex[1];
+        g = "0x" + hex[2] + hex[3];
+        b = "0x" + hex[4] + hex[5];
+        a = "0x" + hex[6] + hex[7];
+    }
+
+    a = +(a/255).toFixed(3);
+
+    return(`rgba(${+r}, ${+g}, ${+b}, ${a})`);
 }
 
 color1.addEventListener("input", gradientShift);
