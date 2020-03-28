@@ -8,6 +8,7 @@ const buttonTop = document.querySelector("#button-top");
 const buttonRight = document.querySelector("#button-right");
 const buttonBottom = document.querySelector("#button-bottom");
 const buttonLeft = document.querySelector("#button-left");
+const buttonCycle = document.querySelector("#button-cycle");
 const degreeBox = document.querySelector("#direction-degrees");
 
     /* Targeting body, to change general background color */
@@ -21,6 +22,15 @@ const hexText = document.querySelector("#hex-value span");
 
 const codeBox = document.querySelectorAll("code");
 
+
+// /* experimenting with changing CSS variables */
+// potentially an easier way to change the color for every element on the page,
+// but less-compatible atm
+// let root = document.documentElement;
+
+// const cycle = () => {
+//     root.style.setProperty("--color-1", "black");
+// }
 
 /* Convert between color codes */
 
@@ -147,7 +157,7 @@ const directionShift = () => {
     }
     else if (event.target == degreeBox) {
         gradientDirection = degreeBox.value + "deg";
-    }
+    } 
     gradientShift();
 }
 
@@ -184,6 +194,9 @@ const changeCodeBoxBorder = (gradientValue) => {
 }
 
 
+/*Custom picker*/
+// Simple example, see optional options for more configuration.
+// from https://github.com/Simonwep/pickr
 
 /* Event listeners */
 
@@ -193,4 +206,5 @@ buttonTop.addEventListener("click", directionShift);
 buttonRight.addEventListener("click", directionShift);
 buttonBottom.addEventListener("click", directionShift);
 buttonLeft.addEventListener("click", directionShift);
+// buttonCycle.addEventListener("click", directionShift);
 degreeBox.addEventListener("input", directionShift);

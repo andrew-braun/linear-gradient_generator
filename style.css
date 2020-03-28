@@ -4,6 +4,8 @@
     --blue: hsla(212, 80%, 42%, 1); 
     --copper-hex: #b92c27;
     --blue-hex: #1565c1;
+    --color-1: hsla(2, 65%, 44%, 1);
+    --color-2: hsla(212, 80%, 42%, 1);
 }
 
 /* CSS Reset */
@@ -56,18 +58,23 @@ table {
 	border-spacing: 0;
 }
 
+/* Main page settings (html, body, etc) */
+
 html {
     height: 100%;
+    font-size: 10px;
 }
 
 body {
     font: 'Raleway', sans-serif;
+    font-size: 1.6rem;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: .5rrem;
+    letter-spacing: .5rem;
     top: 15%;
-    background: linear-gradient(to right, var(--copper-hex), var(--blue-hex));
+    background: linear-gradient(to right, var(--color-1), var(--color-2));
+    /* background: linear-gradient(to right, var(--copper-hex), var(--blue-hex)); */
 }
 
 /* Grid layout */
@@ -87,14 +94,16 @@ body {
 #gradient-output-container {
     display: flex;
     flex-direction: column;
-    
     align-self: center;
+
     grid-column: 2;
+
+    padding: 1rem;
 }
 
 /* General elements */
 h1 {
-    font: 600 3.5rem 'Raleway', sans-serif;
+    font: 600 5rem 'Raleway', sans-serif;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
     text-transform: uppercase;
@@ -103,7 +112,9 @@ h1 {
 }
 
 p, label {
+    font-size: 1.6rem;
     letter-spacing: normal;
+    font-weight: 600;
 }
 
 div {
@@ -113,14 +124,24 @@ div {
 input[type="number"] {
     background-color: hsla(0, 0%, 0%, 0.1);
     border: 0;
-    width: 4rem;
-    border-radius: 3rem 0 0 3rem;
+    height: 3rem;
+    width: 5rem;
+    border-radius: 1rem 0 1rem 0;
+
 
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 2rem;
+    
+    transition: opacity 0.3s ease-in-out;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+         appearance: textfield;
 
 }
 
+input[type="number"]:hover {
+    opacity: 0.6;
+}
 
 /* Codebox */
 code {
@@ -134,7 +155,7 @@ code {
 
     background-color: hsla(192, 15%, 12%, 0.8);
 
-    font: 700 1rem Monospace, sans-serif;
+    font: 700 1.6rem Monospace, sans-serif;
     text-align: center;
     text-transform: none;
     letter-spacing: normal;
@@ -147,12 +168,18 @@ code span {
     -webkit-text-fill-color: transparent;
 }
 
-/* Buttons */
+/* Direction buttons */
 
 .direction-button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: 
+        ". top ."
+        "left cycle right"
+        ". bottom ."
+    ;
     margin-bottom: 1%;
-    display: flex;
-    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -160,38 +187,46 @@ code span {
     display: inline-block;
     margin: 0.3rem;
     padding: 1rem;
-    width: 6.5rem;
+    width: 11rem;
 
     border-width: 0px 2px 0px 2px;
     border-style: solid;
     border-color: transparent;
     border-radius: 15px;
+
+    font-size: 1.6rem;
+
+    transition: border 0.2s ease-in-out, border-radius 0.2s ease-in-out;
 }
 
 #button-top {
-    background: linear-gradient(to top, var(--blue), white);
+    grid-area: top;
+    background: linear-gradient(to top, hsla(180, 1%, 21%, 0.5), transparent);
 }
 
 #button-right {
-    background: linear-gradient(to right, var(--blue), white);
+    grid-area: right;
+    background: linear-gradient(to right, hsla(180, 1%, 21%, 0.5), transparent);
     background-size: 102%;
     background-position-x: -2px;
 }
 
 #button-bottom {
-    background: linear-gradient(to bottom, var(--blue), white);
+    grid-area: bottom;
+    background: linear-gradient(to bottom, hsla(180, 1%, 21%, 0.5), transparent);
 }
 
 #button-left {
-    background: linear-gradient(to left, var(--blue), white);
+    grid-area: left;
+    background: linear-gradient(to left, hsla(180, 1%, 21%, 0.5), transparent);
     background-size: 102%;
 }
 
 .direction-button:hover {
     border-width: 0px 2px 0px 2px;
     border-color: black;
-    border-style: solid;
-    border-radius: 30%;
+    border-radius: 2rem;
+
 }
 
 .direction-button:focus {
@@ -202,6 +237,12 @@ code span {
     font-weight: 600;
 }
 
+#button-cycle {
+    grid-area: cycle;
+    margin: 0.3rem;
+    border: 0;
+    background: linear-gradient();
+}
 
 /* Settings container */
 #gradient-settings-container {
@@ -217,7 +258,7 @@ code span {
 
 #color-select-heading {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin: 0px;
 
 }
@@ -233,6 +274,51 @@ code span {
 
 
 #degree-label {
-    font-size: 1.2rem
+    margin-left: -10%;
+    margin-top: -20%;;
+    font-size: 3.5rem;
 }
 
+/* Breakpoints */
+@media only screen and (max-width: 900px) {
+    html { 
+        font-size: 9.5px;
+}
+
+@media only screen and (max-width: 700px) {
+    html {
+        font-size: 9px;
+    }
+
+}
+
+@media only screen and (max-width: 900px) {
+    html { 
+        font-size: 8px;   
+    }
+    .main-grid-container {
+        grid-template-rows: repeat(2, auto);
+    }
+    #gradient-settings-container {
+        grid-column: span 3;
+        grid-row: 1;
+        align-items: center;
+    }
+    .direction-button-container {
+        justify-content: center;
+        align-items: center;
+    }
+    .direction-button {
+        width: 12rem;
+        height: 5rem;
+        font-size: 1.9rem;
+    }
+    #gradient-output-container {
+        grid-column: span 3;
+        grid-row: 2;
+    }
+    .gradient-css {
+        font-size: 1.7rem;
+    }
+}
+}
