@@ -3,6 +3,9 @@
 let color1 = document.querySelector("#color-1");
 let color2 = document.querySelector("#color-2");
 
+let color1Text = document.querySelector("#color-1-text");
+let color2Text = document.querySelector("#color-2-text");
+
     /* Gradient direction selectors, targeting buttons and input box */
 const buttonTop = document.querySelector("#button-top");
 const buttonRight = document.querySelector("#button-right");
@@ -10,6 +13,11 @@ const buttonBottom = document.querySelector("#button-bottom");
 const buttonLeft = document.querySelector("#button-left");
 const buttonCycle = document.querySelector("#button-cycle");
 const degreeBox = document.querySelector("#direction-degrees");
+
+const buttonHex = document.querySelector("#hex-switch-button");
+const buttonRGBA = document.querySelector("#RGBA-switch-button");
+const buttonHSLA = document.querySelector("#HSLA-switch-button");
+
 
     /* Targeting body, to change general background color */
 const body = document.querySelector("#body-gradient");
@@ -139,6 +147,7 @@ const gradientShift = () => {
     changeCodeTextGradient(currentGradient);
     changeCodeBoxBorder(currentGradient);
 
+    changeColorText();
 }
 
 /* Use buttons to change gradient direction */
@@ -176,7 +185,13 @@ const changeCodeText = (gradientValue) => {
     hexText.textContent = gradientValue;
     
 }
-    
+
+    /* Change the value displayed in the text boxes*/
+const changeColorText = () => {
+    color1Text.value = hexToHSLA(color1.value);
+    color2Text.value = hexToHSLA(color2.value);
+}
+
     /* Linear-gradient code text gradient */
 const changeCodeTextGradient = (gradientValue) => {
     /* Change every code text field color to current gradient background */
@@ -193,7 +208,23 @@ const changeCodeBoxBorder = (gradientValue) => {
     }
 }
 
-
+const convertColorText = () => {
+    switch (event.target.id) {
+        case "hex-switch-button": 
+            color1Text.value = color1.value;
+            color2Text.value = color2.value;
+            break;
+        case "RGBA-switch-button": 
+            color1Text.value = hexToRGBA(color1.value);
+            color2Text.value = hexToRGBA(color2.value);
+            break;
+        case "HSLA-switch-button": 
+            color1Text.value = hexToHSLA(color1.value);
+            color2Text.value = hexToHSLA(color2.value);
+            break;
+    }
+    console.log(event.target.id);
+}
 /*Custom picker*/
 // Simple example, see optional options for more configuration.
 // from https://github.com/Simonwep/pickr
@@ -208,3 +239,6 @@ buttonBottom.addEventListener("click", directionShift);
 buttonLeft.addEventListener("click", directionShift);
 // buttonCycle.addEventListener("click", directionShift);
 degreeBox.addEventListener("input", directionShift);
+buttonHex.addEventListener("click", convertColorText);
+buttonRGBA.addEventListener("click", convertColorText);
+buttonHSLA.addEventListener("click", convertColorText);

@@ -87,6 +87,8 @@ body {
 #gradient-settings-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 0;
 
     grid-column: 1;
 }
@@ -121,27 +123,15 @@ div {
     margin: 2rem;
 }
 
-input[type="number"] {
-    background-color: hsla(0, 0%, 0%, 0.1);
-    border: 0;
-    height: 3rem;
-    width: 5rem;
-    border-radius: 1rem 0 1rem 0;
-
-
-    text-align: center;
-    font-size: 2rem;
-    
-    transition: opacity 0.3s ease-in-out;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-         appearance: textfield;
-
-}
-
-input[type="number"]:hover {
+input[type="number"]:hover, input[type="text"]:hover {
     opacity: 0.6;
 }
+
+input[type="button"]:hover, input[type="color"]:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
 
 /* Codebox */
 code {
@@ -226,7 +216,6 @@ code span {
     border-width: 0px 2px 0px 2px;
     border-color: black;
     border-radius: 2rem;
-
 }
 
 .direction-button:focus {
@@ -237,30 +226,11 @@ code span {
     font-weight: 600;
 }
 
-#button-cycle {
-    grid-area: cycle;
-    margin: 0.3rem;
-    border: 0;
-    background: linear-gradient();
-}
-
 /* Settings container */
 #gradient-settings-container {
     border: 1px solid black;
     border-radius: 1rem;
     margin: 1rem;
-}
-
-#color-input-container {
-    margin: 1rem;
-    padding: 0;
-}
-
-#color-select-heading {
-    font-weight: 700;
-    font-size: 2rem;
-    margin: 0px;
-
 }
 
 /* Degree selector */
@@ -272,11 +242,91 @@ code span {
 
 }
 
+#direction-degrees {
+    background-color: hsla(0, 0%, 0%, 0.1);
+    border: 0;
+    height: 3rem;
+    width: 5rem;
+    border-radius: 1rem 0 1rem 0;
+
+
+    text-align: center;
+    font-size: 2rem;
+    
+    transition: opacity 0.3s ease-in-out;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+         appearance: textfield;
+
+}
 
 #degree-label {
     margin-left: -10%;
     margin-top: -20%;;
     font-size: 3.5rem;
+}
+
+/* Color selectors */
+
+#color-input-container {
+    display: flex;
+    margin: 0;
+}
+
+#color-input-container input {
+    margin: 0.7rem;
+}
+.color-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#color-input-container label {
+    font-size: 1.8rem;
+}
+
+.color-inputs-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+
+#color-input-container input[type="text"] {
+    width: 19rem;
+    padding: 0.5rem;
+    background-color: hsla(0, 0%, 0%, 0.1);
+
+    border: 0;
+    border-radius: 1rem 0 1rem 0;
+
+    text-align: center;
+    font-size: 1.7rem;
+    
+    transition: opacity 0.3s ease-in-out;
+}
+
+#color-code-button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.color-code-button {
+    padding: 1rem;
+    width: 20%;
+    background-color: hsla(0, 0%, 0%, 0.1);
+    
+    border: none;
+    border-radius: 1rem;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.color-code-button:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+    cursor: pointer;
 }
 
 /* Breakpoints */

@@ -24,12 +24,28 @@
                 <input id="direction-degrees" name="direction-degrees" type="number" max="360" min="-360"></input>
                 <label for="direction-degrees" id="degree-label">&#176</label>
             </div>
-
-            <h2 id="color-select-heading">Select two colors</h2>
-
-            <div id="color-input-container">
-                <input type="color" id="color-1" name="color-1" value="#b92c27">
-                <input type="color" id="color-2" name="color-2" value="#1565c1">
+            <div class="color-settings-container">
+                <div id="color-input-container">
+                    <div class="color-inputs">
+                        <div class="color-inputs-row">
+                            <label for="color-1-input">Color 1</label>
+                            <input type="color" id="color-1" name="color-1-input" value="#b92c27">
+                        </div>  
+                        <input type="text" id="color-1-text" name="color-1-text" value="hsla(2, 65%, 44%, 1)">
+                    </div>
+                    <div class="color-inputs">
+                        <div class="color-inputs-row">
+                            <label for="color-2-input">Color 2</label>
+                            <input type="color" id="color-2" name="color-2-input" value="#1565c1">
+                        </div>
+                        <input type="text" id="color-2-text" name="color-2-text" value="hsla(212, 80%, 42%, 1)">   
+                    </div>
+                </div>
+                <div class="button-container" id="color-code-button-container">
+                    <button class="color-code-button" id="hex-switch-button">Hex</button>
+                    <button class="color-code-button" id="RGBA-switch-button">RGBA</button>
+                    <button class="color-code-button" id="HSLA-switch-button">HSLA</button>
+                </div>
             </div>
         </section>
 
