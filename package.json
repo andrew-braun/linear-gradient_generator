@@ -4,7 +4,7 @@
   "description": "CSS linear-gradient generator",
   "main": "index.html",
   "scripts": {
-    "test": "test"
+    "build": "parcel index.html"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/andrew-braun/linear-gradient_generator#readme",
   "dependencies": {
-    "color-convert": "^2.0.1"
+    "color": "^3.1.2"
   }
 }

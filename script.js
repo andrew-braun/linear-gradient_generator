@@ -1,259 +1,322 @@
+// Set self-executing function to contain variables
+// Uncomment below to re-enable
+// (function mainScope() {
+
 /* Import modules */
-let convert = require('color-convert');
+let Color = require('color');
 
-console.log(convert.hex.rgb("11aaff"));
+// SET UP GRADIENT
 
-/* Declare variables for the two main linear-gradient colors, targeting input fields */
-let color1 = document.querySelector("#color-1");
-let color2 = document.querySelector("#color-2");
+// Target color input color picker variables
+let color1Input = document.querySelector("#color-1");
+let color2Input = document.querySelector("#color-2");
+// Target color input text field variables
+let color1TextInput = document.querySelector("#color-1-text");
+let color2TextInput = document.querySelector("#color-2-text");
 
-const codeBox = document.querySelectorAll("code");
+// Target degree box direction variable
+let directionDegreeInput = document.querySelector("#direction-degrees")
+// Get value from input
+let directionDegree = directionDegreeInput.value;
 
-// COLOR CODE CONVERSION FUNCTIONS
-    // HEX -> RGB
-    // HEX -> HSLA
+//CHANGE ELEMENT COLORS
 
-    /* hex to rgb */
-const hexToRGBA = (hexInput) => {
-    let r = 0, g = 0, b = 0, a = 0;
-
-    let hex = hexInput.replace("#", "");
-
-    if (hex.length == 3) {
-        r = "0x" + hex[0] + hex[0];
-        g = "0x" + hex[1] + hex[1];
-        b = "0x" + hex[2] + hex[2]; 
-        a = "0x" + "ff";
-    }
-    else if (hex.length == 4) {
-        r = "0x" + hex[0] + hex[0];
-        g = "0x" + hex[1] + hex[1];
-        b = "0x" + hex[2] + hex[2];
-        a = "0x" + hex[3] + hex[3];
-    }
-    else if (hex.length == 6) {
-        r = "0x" + hex[0] + hex[1];
-        g = "0x" + hex[2] + hex[3];
-        b = "0x" + hex[4] + hex[5];
-        a = "0x" + "ff";
-    }
-    else if (hex.length == 8) {
-        r = "0x" + hex[0] + hex[1];
-        g = "0x" + hex[2] + hex[3];
-        b = "0x" + hex[4] + hex[5];
-        a = "0x" + hex[6] + hex[7];
+//Function using color module to generate objects containing hex, rgb, and hsl color codes
+// based on current input value
+const generateColorCodes = () => {
+    // Object holding manipulable color objects created with the color module
+    let constructorColors = {
+        color1: Color(color1Input.value),
+        color2: Color(color2Input.value)
     }
 
-    a = +(a/255).toFixed(3);
-
-    return(`rgba(${+r}, ${+g}, ${+b}, ${a})`);
-}
+    // Object holding string hex outputs of the values in constructorColors
+    let hexColors = {
+        color1: constructorColors.color1.hex(),
+        color2: constructorColors.color2.hex(),
+    }
     
-    /* hex to hsla */
-const hexToHSLA = (hex) => {
-    /* Convert hex to RGBA */
-    let rgba = hexToRGBA(hex);
-    let rgbaValues = rgba.replace("rgba", "").replace("(", "").replace(")", "");
-    let rgbaSplit = rgbaValues.split(",");
-    let r = rgbaSplit[0], g = rgbaSplit[1], b = rgbaSplit[2], a = rgbaSplit[3];
-    
-    r /= 255;
-    g /= 255;
-    b /= 255;
-
-    let cmin = Math.min(r, g, b),
-        cmax = Math.max(r, g, b),
-        delta = cmax - cmin,
-        h = 0, s = 0, l = 0;
-    
-    if (delta == 0) {
-        h = 0;        
-    } 
-    else if (cmax == r) {
-        h = ((g - b) / delta % 6);
-    }
-    else if (cmax == g) {
-        h = (b - r) / delta + 2;
-    }
-    else if (cmax = b) {
-        h = (r - g) / delta + 4;
+    // Object holding string RGB outputs of the values in constructorColors
+    let rgbColors = {
+        color1: constructorColors.color1.rgb().round().string(),
+        color2: constructorColors.color2.rgb().round().string()
     }
 
-    h = Math.round(h * 60);    
-
-    if (h < 0) {
-        h += 360;
+    // Object holding string HSL outputs of the values in constructorColors
+    let hslColors = {
+        color1: constructorColors.color1.hsl().round().string(),
+        color2: constructorColors.color2.hsl().round().string()
     }
-
-    l = (cmax + cmin) / 2;
-    
-    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-
-    s = Math.round(+(s * 100).toFixed(1));
-    l = Math.round(+(l * 100).toFixed(1));
-
-    return(`hsla(${h}, ${s}%, ${l}%, ${a})`);
-
+    return { constructorColors, hexColors, rgbColors, hslColors };
 }
 
+// Function to generate CSS gradients 
+const generateGradientCSS = () => {
+    // Call color code function to get current input colors in each format
+    let colorCodes = generateColorCodes();
 
-// CHANGE GRADIENT DIRECTION
-
-/* Declare gradient direction selectors, targeting buttons and degree input box */
-const buttonTop = document.querySelector("#button-top");
-const buttonRight = document.querySelector("#button-right");
-const buttonBottom = document.querySelector("#button-bottom");
-const buttonLeft = document.querySelector("#button-left");
-const buttonCycle = document.querySelector("#button-cycle");
-const degreeBox = document.querySelector("#direction-degrees");
-    
-/* Set initial gradient direction */
-let gradientDirection = "to right";
-
-/* Changes gradient direction using buttons and number inputs */
-const directionShift = () => {
-    if (event.target == buttonTop) {
-        gradientDirection = "to top";
+    let gradientCSS = {
+        hex: `linear-gradient(${directionDegree}deg, ${colorCodes.hexColors.color1}, ${colorCodes.hexColors.color2})`,
+        rgb: `linear-gradient(${directionDegree}deg, ${colorCodes.rgbColors.color1}, ${colorCodes.rgbColors.color2})`,
+        hsl: `linear-gradient(${directionDegree}deg, ${colorCodes.hslColors.color1}, ${colorCodes.hslColors.color2})`
     }
-    else if (event.target == buttonRight) {
-        gradientDirection = "to right";
-    }
-    else if (event.target == buttonBottom) {
-        gradientDirection = "to bottom";
-    }
-    else if (event.target == buttonLeft) {
-        gradientDirection = "to left";
-    }
-    else if (event.target == degreeBox) {
-        gradientDirection = degreeBox.value + "deg";
-    } 
-    gradientShift();
+    return(gradientCSS)
 }
 
-// CHANGE ELEMENT COLORS
-    /* Main color/text change function */
-const gradientShift = () => {
-    /* Create variable for current gradient */
-    let currentDirection = gradientDirection;
+// Target document body
+let body = document.querySelector("body");
+
+// Main element color change function
+const changeColor = () => {
+    let gradientCSS = generateGradientCSS();
+
+    body.style.backgroundImage = gradientCSS.hex;
+}
+
+color1Input.addEventListener("input", changeColor);
+color2Input.addEventListener("input", changeColor);
+
+
+
+// color1TextInput.addEventListener("change", changeColor);
+// color2TextInput.addEventListener("change", changeColor);
+
+
+// buttonTop.addEventListener("click", directionShift);
+// buttonRight.addEventListener("click", directionShift);
+// buttonBottom.addEventListener("click", directionShift);
+// buttonLeft.addEventListener("click", directionShift);
+// // buttonCycle.addEventListener("click", directionShift);
+// degreeBox.addEventListener("input", directionShift);
+// buttonHex.addEventListener("click", convertColorText);
+// buttonRGBA.addEventListener("click", convertColorText);
+// buttonHSLA.addEventListener("click", convertColorText);
+
+
+//Uncomment below to re-enable scoping
+// }
+// )();
+
+
+
+
+
+
+
+
+
+
+
+// const getCurrentSettings = () => {
+//     /* Read the color/direction inputs, return an object with:
+//         color1 and color2 as hex strings,
+//         direction string/number,
+//         fully-assembled CSS gradient 
+//     */
+
+//     //By default, the color hex values should just be whatever's in the input box
+//     let color1Hex = color1Input.value;
+//     let color2Hex = color2Input.value;
+    
+//     /* But if the color is changed in the RGB/HSL format in the input text box,
+//         it will have to be converted to hex before it can go into the css code string. */
+//     if (event.target == color1TextInput || event.target == color2TextInput) {
+//         color1Hex = convertToHex(color1TextInput.value);
+//         color2Hex = convertToHex(color1TextInput.value);
+//     }
+
+//     let cssGradient = `linear-gradient(${directionDegree}, ${color1Hex}, ${color2Hex})`
+
+//     currentSettings = {
+//         color1: color1Hex,
+//         color2: color2Hex,
+//         direction: directionDegree,
+//         gradient: cssGradient
+//     }
+
+//     return(currentSettings)
+// }
+
+
+
+
+// // MAIN COLOR CHANGE FUNCTION
+
+// const body = document.querySelector("#body-gradient");
+// /* CSS code in text boxes (targets span element) */
+// const cssText = document.querySelectorAll(".gradient-css span");
+// /* Code container for cssText (targets code element) */
+// const codeBox = document.querySelectorAll("code");
+
+// const caller = () => {
+//     inputs = inputHandler(event.target)
+
+// }
+
+// const changeColors = (gradientDirection, color1Hex, color2Hex) {
+    
+//     /* String literal with css code containing gradient to use for color changes */
+//     let gradientCode = `linear-gradient(${gradientDirection}, ${color1Hex}, ${color2Hex})`;
+    
+//     /* Change background gradient */
+//     body.style.backgroundImage = gradientCode;    
+
+//     /* Change gradient of CSS code text output */
+//     for (line of cssText) {
+//         line.style.backgroundImage = gradientValue;
+//     }
+
+//     /* Change code text box borders */
+//     for (box of codeBox) {
+//         box.style.borderImage = `linear-gradient(${gradientDirection}, ${colorHex}, ${color2Hex}) 1 / 1 / 0 stretch`;
+//     }
+
+//     // Add a bit that changes the text color to be light if the background is dark
+// }
+
+
+// // CHANGE GRADIENT DIRECTION
+
+// /* Declare gradient direction selectors, targeting buttons and degree input box */
+// const buttonTop = document.querySelector("#button-top");
+// const buttonRight = document.querySelector("#button-right");
+// const buttonBottom = document.querySelector("#button-bottom");
+// const buttonLeft = document.querySelector("#button-left");
+// const buttonCycle = document.querySelector("#button-cycle");
+// const degreeBox = document.querySelector("#direction-degrees");
+    
+// /* Set initial gradient direction */
+// let gradientDirection = "to right";
+
+// /* Changes gradient direction using buttons and number inputs */
+// const directionShift = () => {
+//     if (event.target == buttonTop) {
+//         gradientDirection = "to top";
+//     }
+//     else if (event.target == buttonRight) {
+//         gradientDirection = "to right";
+//     }
+//     else if (event.target == buttonBottom) {
+//         gradientDirection = "to bottom";
+//     }
+//     else if (event.target == buttonLeft) {
+//         gradientDirection = "to left";
+//     }
+//     else if (event.target == degreeBox) {
+//         gradientDirection = degreeBox.value + "deg";
+//     } 
+//     gradientShift();
+// }
+
+// // CHANGE ELEMENT COLORS
+//     /* Main color/text change function */
+// const gradientShift = () => {
+//     /* Create variable for current gradient */
+//     let currentDirection = gradientDirection;
    
-    let currentGradient = `linear-gradient(${currentDirection}, ${color1.value}, ${color2.value})`;
+//     let currentGradient = `linear-gradient(${currentDirection}, ${color1.value}, ${color2.value})`;
 
-    changeBackgroundGradient(currentGradient); // changes the body background
-    changeCodeTextGradient(currentGradient); // changes the color of the CSS code output
-    changeCodeBoxBorder(currentGradient); // changes the border of code CSS code box
+//     changeBackgroundGradient(currentGradient); // changes the body background
+//     changeCodeTextGradient(currentGradient); // changes the color of the CSS code output
+//     changeCodeBoxBorder(currentGradient); // changes the border of code CSS code box
 
-    changeCodeText(currentGradient); // changes the CSS code output
+//     changeCodeText(currentGradient); // changes the CSS code output
 
-    changeColorText();
-}
+//     changeColorText();
+// }
 
-    /* Change background gradient */
-const body = document.querySelector("#body-gradient");
 
-const changeBackgroundGradient = (gradientValue) => {
-    body.style.backgroundImage = gradientValue;    
-}
 
-    /* Change gradient of CSS code text output */
-const changeCodeTextGradient = (gradientValue) => {
-    /* Change every code text field color to current gradient background */
-    for (line of gradientText) {
-        line.style.backgroundImage = gradientValue;
-    }
-}
+// // CSS CODE TEXT OUTPUT
 
-    /* Change code output box borders */
-const changeCodeBoxBorder = (gradientValue) => {
-    for (box of codeBox) {
-        box.style.borderImage = `linear-gradient(to left, ${color1.value}, ${color2.value}) 1 / 1 / 0 stretch`;
-    }
-}
+// /* Declare variables for CSS gradient code output*/
+// const hslaText = document.querySelector("#hsla-value span");
+// const rgbaText = document.querySelector("#rgba-value span");
+// const hexText = document.querySelector("#hex-value span");
 
-// CSS CODE TEXT OUTPUT
+// /* Set initial gradient value in codeboxes */
+// hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
+// rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
+// hexText.textContent = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
 
-/* Declare variables for CSS gradient code output*/
-const gradientText = document.querySelectorAll(".gradient-css span");
-const hslaText = document.querySelector("#hsla-value span");
-const rgbaText = document.querySelector("#rgba-value span");
-const hexText = document.querySelector("#hex-value span");
-
-/* Set initial gradient value in codeboxes */
-hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
-rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
-hexText.textContent = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
-
-    /* Change code text to current gradient */
-const changeCodeText = (gradientValue) => {
-    hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
-    rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
-    hexText.textContent = gradientValue;
+//     /* Change code text to current gradient */
+// const changeCodeText = (gradientValue) => {
+//     hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
+//     rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
+//     hexText.textContent = gradientValue;
     
-}
+// }
 
-// COLOR CODE INPUT BOXES
+// // COLOR CODE INPUT BOXES
 
-let color1Text = document.querySelector("#color-1-text");
-let color2Text = document.querySelector("#color-2-text");
+// let color1Text = document.querySelector("#color-1-text");
+// let color2Text = document.querySelector("#color-2-text");
     
-const changeColorText = () => {
-    color1Text.value = color1.value;
-    color2Text.value = color2.value;
-}
+// const changeColorText = () => {
+//     color1Text.value = color1.value;
+//     color2Text.value = color2.value;
+// }
 
-const inputColorChange = () => {
+// const inputColorChange = () => {
 
-    color1.value = color1Text.value;
-    color2.value = color2Text.value;
-    gradientShift();
-}
-
-
-
-// TOGGLE BEWEEN HEX/RGBA/HSLA
-
-const buttonHex = document.querySelector("#hex-switch-button");
-const buttonRGBA = document.querySelector("#RGBA-switch-button");
-const buttonHSLA = document.querySelector("#HSLA-switch-button");
-
-const convertColorText = () => {
-    switch (event.target.id) {
-        case "hex-switch-button": 
-            color1Text.value = color1.value;
-            color2Text.value = color2.value;
-            break;
-        case "RGBA-switch-button": 
-            color1Text.value = hexToRGBA(color1.value);
-            color2Text.value = hexToRGBA(color2.value);
-            break;
-        case "HSLA-switch-button": 
-            color1Text.value = hexToHSLA(color1.value);
-            color2Text.value = hexToHSLA(color2.value);
-            break;
-    }
-    console.log(event.target.id);
-}
+//     color1.value = color1Text.value;
+//     color2.value = color2Text.value;
+//     gradientShift();
+// }
 
 
 
-/*Custom picker*/
-// Simple example, see optional options for more configuration.
-// from https://github.com/Simonwep/pickr
+// // TOGGLE BEWEEN HEX/RGBA/HSLA
 
-/* Event listeners */
+// const buttonHex = document.querySelector("#hex-switch-button");
+// const buttonRGBA = document.querySelector("#RGBA-switch-button");
+// const buttonHSLA = document.querySelector("#HSLA-switch-button");
 
-color1.addEventListener("input", gradientShift);
-color2.addEventListener("input", gradientShift);
-buttonTop.addEventListener("click", directionShift);
-buttonRight.addEventListener("click", directionShift);
-buttonBottom.addEventListener("click", directionShift);
-buttonLeft.addEventListener("click", directionShift);
-// buttonCycle.addEventListener("click", directionShift);
-degreeBox.addEventListener("input", directionShift);
-buttonHex.addEventListener("click", convertColorText);
-buttonRGBA.addEventListener("click", convertColorText);
-buttonHSLA.addEventListener("click", convertColorText);
-color1Text.addEventListener("change", inputColorChange);
-color2Text.addEventListener("change", inputColorChange);
+// const convertColorText = () => {
+//     switch (event.target.id) {
+//         case "hex-switch-button": 
+//             color1Text.value = color1.value;
+//             color2Text.value = color2.value;
+//             break;
+//         case "RGBA-switch-button": 
+//             color1Text.value = hexToRGBA(color1.value);
+//             color2Text.value = hexToRGBA(color2.value);
+//             break;
+//         case "HSLA-switch-button": 
+//             color1Text.value = hexToHSLA(color1.value);
+//             color2Text.value = hexToHSLA(color2.value);
+//             break;
+//     }
+//     console.log(event.target.id);
+// }
+
+
+
+// /*Custom picker*/
+// // Simple example, see optional options for more configuration.
+// // from https://github.com/Simonwep/pickr
+
+// /* Event listeners */
+
+// color1.addEventListener("input", gradientShift);
+// color2.addEventListener("input", gradientShift);
+// buttonTop.addEventListener("click", directionShift);
+// buttonRight.addEventListener("click", directionShift);
+// buttonBottom.addEventListener("click", directionShift);
+// buttonLeft.addEventListener("click", directionShift);
+// // buttonCycle.addEventListener("click", directionShift);
+// degreeBox.addEventListener("input", directionShift);
+// buttonHex.addEventListener("click", convertColorText);
+// buttonRGBA.addEventListener("click", convertColorText);
+// buttonHSLA.addEventListener("click", convertColorText);
+// color1Text.addEventListener("change", inputColorChange);
+// color2Text.addEventListener("change", inputColorChange);
+
+
+
+
+
+
 
 // /* experimenting with changing CSS variables */
 // potentially an easier way to change the color for every element on the page,
@@ -301,4 +364,8 @@ color2Text.addEventListener("change", inputColorChange);
         3.2.1. Output hex, RGBA, and HSLA
     3.
 
+1. 
+
+
 */
+
