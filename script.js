@@ -1,46 +1,17 @@
-/* HTML element selectors */
-    /* Two main linear-gradient colors, targeting input fields */
+/* Import modules */
+let convert = require('color-convert');
+
+console.log(convert.hex.rgb("11aaff"));
+
+/* Declare variables for the two main linear-gradient colors, targeting input fields */
 let color1 = document.querySelector("#color-1");
 let color2 = document.querySelector("#color-2");
 
-let color1Text = document.querySelector("#color-1-text");
-let color2Text = document.querySelector("#color-2-text");
-
-    /* Gradient direction selectors, targeting buttons and input box */
-const buttonTop = document.querySelector("#button-top");
-const buttonRight = document.querySelector("#button-right");
-const buttonBottom = document.querySelector("#button-bottom");
-const buttonLeft = document.querySelector("#button-left");
-const buttonCycle = document.querySelector("#button-cycle");
-const degreeBox = document.querySelector("#direction-degrees");
-
-const buttonHex = document.querySelector("#hex-switch-button");
-const buttonRGBA = document.querySelector("#RGBA-switch-button");
-const buttonHSLA = document.querySelector("#HSLA-switch-button");
-
-
-    /* Targeting body, to change general background color */
-const body = document.querySelector("#body-gradient");
-
-    /* The gradient text code, targeting text boxes containing copy-pastable CSS code */
-const gradientText = document.querySelectorAll(".gradient-css span");
-const hslaText = document.querySelector("#hsla-value span");
-const rgbaText = document.querySelector("#rgba-value span");
-const hexText = document.querySelector("#hex-value span");
-
 const codeBox = document.querySelectorAll("code");
 
-
-// /* experimenting with changing CSS variables */
-// potentially an easier way to change the color for every element on the page,
-// but less-compatible atm
-// let root = document.documentElement;
-
-// const cycle = () => {
-//     root.style.setProperty("--color-1", "black");
-// }
-
-/* Convert between color codes */
+// COLOR CODE CONVERSION FUNCTIONS
+    // HEX -> RGB
+    // HEX -> HSLA
 
     /* hex to rgb */
 const hexToRGBA = (hexInput) => {
@@ -126,31 +97,20 @@ const hexToHSLA = (hex) => {
 }
 
 
+// CHANGE GRADIENT DIRECTION
+
+/* Declare gradient direction selectors, targeting buttons and degree input box */
+const buttonTop = document.querySelector("#button-top");
+const buttonRight = document.querySelector("#button-right");
+const buttonBottom = document.querySelector("#button-bottom");
+const buttonLeft = document.querySelector("#button-left");
+const buttonCycle = document.querySelector("#button-cycle");
+const degreeBox = document.querySelector("#direction-degrees");
+    
 /* Set initial gradient direction */
 let gradientDirection = "to right";
 
-/* Set initial gradient value in codeboxes */
-hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
-rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
-hexText.textContent = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
-
-/* Main color change function; changes background, CSS code text, CSS code text color, and codebox border  */
-
-const gradientShift = () => {
-    /* Create variable for current gradient */
-    let currentDirection = gradientDirection;
-   
-    let currentGradient = `linear-gradient(${currentDirection}, ${color1.value}, ${color2.value})`;
-
-    changeBackgroundGradient(currentGradient);
-    changeCodeText(currentGradient);
-    changeCodeTextGradient(currentGradient);
-    changeCodeBoxBorder(currentGradient);
-
-    changeColorText();
-}
-
-/* Use buttons to change gradient direction */
+/* Changes gradient direction using buttons and number inputs */
 const directionShift = () => {
     if (event.target == buttonTop) {
         gradientDirection = "to top";
@@ -170,29 +130,31 @@ const directionShift = () => {
     gradientShift();
 }
 
-/* Change various page element colors */
-    /* Background gradient */
+// CHANGE ELEMENT COLORS
+    /* Main color/text change function */
+const gradientShift = () => {
+    /* Create variable for current gradient */
+    let currentDirection = gradientDirection;
+   
+    let currentGradient = `linear-gradient(${currentDirection}, ${color1.value}, ${color2.value})`;
+
+    changeBackgroundGradient(currentGradient); // changes the body background
+    changeCodeTextGradient(currentGradient); // changes the color of the CSS code output
+    changeCodeBoxBorder(currentGradient); // changes the border of code CSS code box
+
+    changeCodeText(currentGradient); // changes the CSS code output
+
+    changeColorText();
+}
+
+    /* Change background gradient */
+const body = document.querySelector("#body-gradient");
+
 const changeBackgroundGradient = (gradientValue) => {
-    /* Change page background to current gradient */
     body.style.backgroundImage = gradientValue;    
 }
 
-    /* Change actual words of code to current gradient */
-const changeCodeText = (gradientValue) => {
-    /* Change text inside codeboxes to current gradient */
-    hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
-    rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
-    hexText.textContent = gradientValue;
-    
-}
-
-    /* Change the value displayed in the text boxes*/
-const changeColorText = () => {
-    color1Text.value = hexToHSLA(color1.value);
-    color2Text.value = hexToHSLA(color2.value);
-}
-
-    /* Linear-gradient code text gradient */
+    /* Change gradient of CSS code text output */
 const changeCodeTextGradient = (gradientValue) => {
     /* Change every code text field color to current gradient background */
     for (line of gradientText) {
@@ -200,13 +162,58 @@ const changeCodeTextGradient = (gradientValue) => {
     }
 }
 
-    /* Linear-gradient code box borders */
+    /* Change code output box borders */
 const changeCodeBoxBorder = (gradientValue) => {
-    /* Change border of codeboxes to current gradient */
     for (box of codeBox) {
         box.style.borderImage = `linear-gradient(to left, ${color1.value}, ${color2.value}) 1 / 1 / 0 stretch`;
     }
 }
+
+// CSS CODE TEXT OUTPUT
+
+/* Declare variables for CSS gradient code output*/
+const gradientText = document.querySelectorAll(".gradient-css span");
+const hslaText = document.querySelector("#hsla-value span");
+const rgbaText = document.querySelector("#rgba-value span");
+const hexText = document.querySelector("#hex-value span");
+
+/* Set initial gradient value in codeboxes */
+hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
+rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
+hexText.textContent = `linear-gradient(${gradientDirection}, ${color1.value}, ${color2.value})`;
+
+    /* Change code text to current gradient */
+const changeCodeText = (gradientValue) => {
+    hslaText.textContent = `linear-gradient(${gradientDirection}, ${hexToHSLA(color1.value)}, ${hexToHSLA(color2.value)})`;
+    rgbaText.textContent = `linear-gradient(${gradientDirection}, ${hexToRGBA(color1.value)}, ${hexToRGBA(color2.value)})`;
+    hexText.textContent = gradientValue;
+    
+}
+
+// COLOR CODE INPUT BOXES
+
+let color1Text = document.querySelector("#color-1-text");
+let color2Text = document.querySelector("#color-2-text");
+    
+const changeColorText = () => {
+    color1Text.value = color1.value;
+    color2Text.value = color2.value;
+}
+
+const inputColorChange = () => {
+
+    color1.value = color1Text.value;
+    color2.value = color2Text.value;
+    gradientShift();
+}
+
+
+
+// TOGGLE BEWEEN HEX/RGBA/HSLA
+
+const buttonHex = document.querySelector("#hex-switch-button");
+const buttonRGBA = document.querySelector("#RGBA-switch-button");
+const buttonHSLA = document.querySelector("#HSLA-switch-button");
 
 const convertColorText = () => {
     switch (event.target.id) {
@@ -225,6 +232,9 @@ const convertColorText = () => {
     }
     console.log(event.target.id);
 }
+
+
+
 /*Custom picker*/
 // Simple example, see optional options for more configuration.
 // from https://github.com/Simonwep/pickr
@@ -242,3 +252,53 @@ degreeBox.addEventListener("input", directionShift);
 buttonHex.addEventListener("click", convertColorText);
 buttonRGBA.addEventListener("click", convertColorText);
 buttonHSLA.addEventListener("click", convertColorText);
+color1Text.addEventListener("change", inputColorChange);
+color2Text.addEventListener("change", inputColorChange);
+
+// /* experimenting with changing CSS variables */
+// potentially an easier way to change the color for every element on the page,
+// but less-compatible atm
+// let root = document.documentElement;
+
+// const cycle = () => {
+//     root.style.setProperty("--color-1", "black");
+// }
+
+
+
+/* Design 
+
+1. A function that changes the main color values on:
+    - Color input change
+    - Text input change
+
+2. A function that uses the main color values to:
+    - change color elements (body, text,boxes, etc.)
+    - Change text/buttons to light color if background is dark, vice versa
+
+3. A function that uses the main color values to: 
+    - change the printed CSS code text
+    - convert CSS code text to RGBA + HSLA
+
+4. A function that changes the main direction value on:
+    - Button input
+    - Degree input
+
+1. On input, trigger a function that stores the two colors in variables
+    1.1. Color input - easy
+    1.2. Text input
+        1.2.1. Whenever a change is finished, run a function to check the input
+            1.2.1.0. Validate code
+                1.2.1.0.1. If it's not a valid color input, abort; don't change variables
+            1.2.1.1. Detect hex, HSL/HSLA, RGB/RGBA
+            1.2.1.2. Convert to hex for machine
+            1.2.1.2. Store the color in the variable 
+2. Use those two colors to create a CSS linear gradient that can be used to change elements
+3. In the main function, call helper functions using the two colors and linear-gradient as inputs
+    3.1. Change element colors
+        3.1.1. If background is too dark, switch text and other elements to white
+    3.2. Change CSS code
+        3.2.1. Output hex, RGBA, and HSLA
+    3.
+
+*/
