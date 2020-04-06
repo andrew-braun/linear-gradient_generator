@@ -51,10 +51,8 @@ const generateColorCodes = () => {
 }
 
 // Function to generate CSS gradients 
-const generateGradientCSS = () => {
+const generateGradientCSS = (colorCodes) => {
     // Call color code function to get current input colors in each format
-    let colorCodes = generateColorCodes();
-
     let gradientCSS = {
         hex: `linear-gradient(${directionDegree}deg, ${colorCodes.hexColors.color1}, ${colorCodes.hexColors.color2})`,
         rgb: `linear-gradient(${directionDegree}deg, ${colorCodes.rgbColors.color1}, ${colorCodes.rgbColors.color2})`,
@@ -65,16 +63,53 @@ const generateGradientCSS = () => {
 
 // Target document body
 let body = document.querySelector("body");
+//CSS code in text boxes (targets span element)
+const cssText = document.querySelectorAll(".gradient-css span");
+//Code container for cssText (targets code element)
+const codeBox = document.querySelectorAll("code");
 
 // Main element color change function
-const changeColor = () => {
-    let gradientCSS = generateGradientCSS();
+const changeColor = (colorCodes, gradientCSS) => {
 
+    //Change body background to current gradient
     body.style.backgroundImage = gradientCSS.hex;
+
+    //Change gradient of CSS code text output
+    for (line of cssText) {
+        line.style.backgroundImage = gradientCSS.hex;
+        console.log(line);
+    }
+
+    //Change code text box borders
+    for (box of codeBox) {
+        box.style.borderImage = `linear-gradient(${directionDegree}deg, ${colorCodes.hexColors.color2}, ${colorCodes.hexColors.color1}) 1 / 1 / 0 stretch`;
+    }
+    
 }
 
-color1Input.addEventListener("input", changeColor);
-color2Input.addEventListener("input", changeColor);
+//Target span elements containing CSS code output text
+let hslaOutput = document.querySelector("#hsla-value");
+let rgbaOutput = document.querySelector("#rgba-value");
+let hexOutput = document.querySelector("#hex-value");
+
+const changeCSSOutput = (gradientCSS) => {
+    hslaOutput.textContent = gradientCSS.hsl;
+    rgbaOutput.textContent = gradientCSS.rgb;
+    hexOutput.textContent = gradientCSS.hex;
+}
+
+// Function that updates the color data and uses it is as input to call the DOM change functions
+const masterChange = () => {
+    let colorCodes = generateColorCodes();
+    let gradientCSS = generateGradientCSS(colorCodes);
+
+    changeCSSOutput(gradientCSS);
+
+    changeColor(colorCodes, gradientCSS);
+}
+
+color1Input.addEventListener("input", masterChange);
+color2Input.addEventListener("input", masterChange);
 
 
 
