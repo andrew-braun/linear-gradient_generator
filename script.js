@@ -14,12 +14,11 @@ let color2Input = document.querySelector("#color-2");
 let color1TextInput = document.querySelector("#color-1-text");
 let color2TextInput = document.querySelector("#color-2-text");
 
+
 // Target degree box direction variable
 let directionDegreeInput = document.querySelector("#direction-degrees")
 // Get value from input
 let directionDegree = directionDegreeInput.value;
-
-//CHANGE ELEMENT COLORS
 
 //Function using color module to generate objects containing hex, rgb, and hsl color codes
 // based on current input value
@@ -50,9 +49,11 @@ const generateColorCodes = () => {
     return { constructorColors, hexColors, rgbColors, hslColors };
 }
 
-// Function to generate CSS gradients 
+//CHANGE ELEMENT COLORS
+
+// Function to generate CSS gradient code text
 const generateGradientCSS = (colorCodes) => {
-    // Call color code function to get current input colors in each format
+    // Get current input colors in each color code format
     let gradientCSS = {
         hex: `linear-gradient(${directionDegree}deg, ${colorCodes.hexColors.color1}, ${colorCodes.hexColors.color2})`,
         rgb: `linear-gradient(${directionDegree}deg, ${colorCodes.rgbColors.color1}, ${colorCodes.rgbColors.color2})`,
@@ -111,10 +112,22 @@ const masterChange = () => {
 color1Input.addEventListener("input", masterChange);
 color2Input.addEventListener("input", masterChange);
 
+//READ INPUT FROM TEXT BOXES
+    /* Fix error that pops up with invalid inputs */
+    /* Also sanitize and validate them */
+const colorTextInput = () => {
+    color1TextToHex = Color(color1TextInput.value).hex();
+    color2TextToHex = Color(color2TextInput.value).hex();
+    
+    color1Input.value = color1TextToHex;
+    color2Input.value = color2TextToHex;
 
+    masterChange();
+}
 
-// color1TextInput.addEventListener("change", changeColor);
-// color2TextInput.addEventListener("change", changeColor);
+color1TextInput.addEventListener("input", colorTextInput);
+color2TextInput.addEventListener("change", colorTextInput);
+
 
 
 // buttonTop.addEventListener("click", directionShift);

@@ -2260,8 +2260,7 @@ var color2TextInput = document.querySelector("#color-2-text"); // Target degree 
 
 var directionDegreeInput = document.querySelector("#direction-degrees"); // Get value from input
 
-var directionDegree = directionDegreeInput.value; //CHANGE ELEMENT COLORS
-//Function using color module to generate objects containing hex, rgb, and hsl color codes
+var directionDegree = directionDegreeInput.value; //Function using color module to generate objects containing hex, rgb, and hsl color codes
 // based on current input value
 
 var generateColorCodes = function generateColorCodes() {
@@ -2291,11 +2290,12 @@ var generateColorCodes = function generateColorCodes() {
     rgbColors: rgbColors,
     hslColors: hslColors
   };
-}; // Function to generate CSS gradients 
+}; //CHANGE ELEMENT COLORS
+// Function to generate CSS gradient code text
 
 
 var generateGradientCSS = function generateGradientCSS(colorCodes) {
-  // Call color code function to get current input colors in each format
+  // Get current input colors in each color code format
   var gradientCSS = {
     hex: "linear-gradient(".concat(directionDegree, "deg, ").concat(colorCodes.hexColors.color1, ", ").concat(colorCodes.hexColors.color2, ")"),
     rgb: "linear-gradient(".concat(directionDegree, "deg, ").concat(colorCodes.rgbColors.color1, ", ").concat(colorCodes.rgbColors.color2, ")"),
@@ -2366,9 +2366,22 @@ var masterChange = function masterChange() {
 };
 
 color1Input.addEventListener("input", masterChange);
-color2Input.addEventListener("input", masterChange); // color1TextInput.addEventListener("change", changeColor);
-// color2TextInput.addEventListener("change", changeColor);
-// buttonTop.addEventListener("click", directionShift);
+color2Input.addEventListener("input", masterChange); //READ INPUT FROM TEXT BOXES
+
+/* Fix error that pops up with invalid inputs */
+
+/* Also sanitize and validate them */
+
+var colorTextInput = function colorTextInput() {
+  color1TextToHex = Color(color1TextInput.value).hex();
+  color2TextToHex = Color(color2TextInput.value).hex();
+  color1Input.value = color1TextToHex;
+  color2Input.value = color2TextToHex;
+  masterChange();
+};
+
+color1TextInput.addEventListener("input", colorTextInput);
+color2TextInput.addEventListener("change", colorTextInput); // buttonTop.addEventListener("click", directionShift);
 // buttonRight.addEventListener("click", directionShift);
 // buttonBottom.addEventListener("click", directionShift);
 // buttonLeft.addEventListener("click", directionShift);
@@ -2609,7 +2622,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53196" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65229" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
