@@ -77,6 +77,9 @@ body {
     /* background: linear-gradient(to right, var(--copper-hex), var(--blue-hex)); */
 }
 
+label {
+    color: black;
+}
 /* Grid layout */
 
 .main-grid-container {

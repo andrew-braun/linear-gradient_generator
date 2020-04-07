@@ -63,29 +63,97 @@ const generateGradientCSS = (colorCodes) => {
 }
 
 // Target document body
-let body = document.querySelector("body");
+const body = document.querySelector("body");
 //CSS code in text boxes (targets span element)
 const cssText = document.querySelectorAll(".gradient-css span");
 //Code container for cssText (targets code element)
 const codeBox = document.querySelectorAll("code");
+//Select all labels, headings, buttons, paragraphs, and inputs
+const labels = document.querySelectorAll("label");
+const h1s = document.querySelectorAll("h1");
+const buttons = document.querySelectorAll("button");
+const inputs = document.querySelectorAll("input");
 
 // Main element color change function
 const changeColor = (colorCodes, gradientCSS) => {
+
+    color1 = colorCodes.constructorColors.color1;
+    color2 = colorCodes.constructorColors.color2;
 
     //Change body background to current gradient
     body.style.backgroundImage = gradientCSS.hex;
 
     //Change gradient of CSS code text output
     for (line of cssText) {
-        line.style.backgroundImage = gradientCSS.hex;
-        console.log(line);
+        line.style.backgroundImage = `linear-gradient(${directionDegree + 30}deg, ${color1}, ${color2})`;
     }
 
     //Change code text box borders
+
     for (box of codeBox) {
-        box.style.borderImage = `linear-gradient(${directionDegree}deg, ${colorCodes.hexColors.color2}, ${colorCodes.hexColors.color1}) 1 / 1 / 0 stretch`;
+        box.style.borderImage = `linear-gradient(${directionDegree}deg, ${color2}, ${color1}) 1 / 1 / 0 stretch`;
     }
-    
+
+    let readableColorLight = Color("hsl(0, 100%, 100%)").alpha(0.8);
+    let readableColorDark = Color("hsl(0, 0%, 0%)").alpha(0.8);
+
+    for (label of labels) {
+        label.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    }
+    for (button of buttons) {
+        button.style.color = color1.negate().desaturate(0.5);
+    }
+    for (h1 of h1s) {
+        h1.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    }
+    for (input of inputs) {
+        input.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    }
+    // for (box of codeBox) {
+    //     if (color1.isDark() && color2.isDark()) {
+    //         box.style.background = readableColorLight;
+    //     } else if (color1.isLight() && color2.isLight()) {
+    //         box.style.background = readableColorDark;
+    //     } else if (color1.isDark() && color2.isLight()) {
+    //         box.style.background = `linear-gradient(${directionDegree}deg, ${readableColorLight}, ${readableColorDark})`;
+    //     } else if (color1.isLight() && color2.isDark()) {
+    //         box.style.background = `linear-gradient(${directionDegree}deg, ${readableColorDark}, ${readableColorLight})`;
+    //     }
+    // }
+
+    // if (colorCodes.constructorColors.color1.isDark()) {
+    //     for (label of labels) {
+    //         label.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.1).lighten(0.2);
+    //     }
+    //     for (button of buttons) {
+    //         button.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.5);
+    //     }
+    //     for (h1 of h1s) {
+    //         h1.style.color = "white";
+    //     }
+    //     for (input of inputs) {
+    //         input.style.color = "white";
+    //     }
+    //     for (box of codeBox) {
+    //         box.style.background = colorCodes.constructorColors.color1.negate().desaturate(0.5).alpha(0.4);
+    //     }
+    // } else if (colorCodes.constructorColors.color1.isLight()) {
+    //     for (label of labels) {
+    //         label.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.1).lighten(0.2);
+    //     }
+    //     for (button of buttons) {
+    //         button.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.5);
+    //     }
+    //     for (h1 of h1s) {
+    //         h1.style.color = "black";
+    //     }
+    //     for (input of inputs) {
+    //         input.style.color = "black";
+    //     }
+    //     for (box of codeBox) {
+    //         box.style.background = colorCodes.constructorColors.color1.negate().desaturate(0.5).alpha(0.4);
+    //     }
+    // }
 }
 
 //Target span elements containing CSS code output text
@@ -128,7 +196,7 @@ const colorTextInput = () => {
 color1TextInput.addEventListener("input", colorTextInput);
 color2TextInput.addEventListener("change", colorTextInput);
 
-
+masterChange();
 
 // buttonTop.addEventListener("click", directionShift);
 // buttonRight.addEventListener("click", directionShift);

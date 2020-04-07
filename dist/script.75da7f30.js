@@ -2309,10 +2309,17 @@ var body = document.querySelector("body"); //CSS code in text boxes (targets spa
 
 var cssText = document.querySelectorAll(".gradient-css span"); //Code container for cssText (targets code element)
 
-var codeBox = document.querySelectorAll("code"); // Main element color change function
+var codeBox = document.querySelectorAll("code"); //Select all labels, headings, buttons, paragraphs, and inputs
+
+var labels = document.querySelectorAll("label");
+var h1s = document.querySelectorAll("h1");
+var buttons = document.querySelectorAll("button");
+var inputs = document.querySelectorAll("input"); // Main element color change function
 
 var changeColor = function changeColor(colorCodes, gradientCSS) {
-  //Change body background to current gradient
+  color1 = colorCodes.constructorColors.color1;
+  color2 = colorCodes.constructorColors.color2; //Change body background to current gradient
+
   body.style.backgroundImage = gradientCSS.hex; //Change gradient of CSS code text output
 
   var _iterator = _createForOfIteratorHelper(cssText),
@@ -2321,8 +2328,7 @@ var changeColor = function changeColor(colorCodes, gradientCSS) {
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       line = _step.value;
-      line.style.backgroundImage = gradientCSS.hex;
-      console.log(line);
+      line.style.backgroundImage = "linear-gradient(".concat(directionDegree + 30, "deg, ").concat(color1, ", ").concat(color2, ")");
     } //Change code text box borders
 
   } catch (err) {
@@ -2337,12 +2343,115 @@ var changeColor = function changeColor(colorCodes, gradientCSS) {
   try {
     for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
       box = _step2.value;
-      box.style.borderImage = "linear-gradient(".concat(directionDegree, "deg, ").concat(colorCodes.hexColors.color2, ", ").concat(colorCodes.hexColors.color1, ") 1 / 1 / 0 stretch");
+      box.style.borderImage = "linear-gradient(".concat(directionDegree, "deg, ").concat(color2, ", ").concat(color1, ") 1 / 1 / 0 stretch");
     }
   } catch (err) {
     _iterator2.e(err);
   } finally {
     _iterator2.f();
+  }
+
+  var readableColorLight = Color("hsl(0, 100%, 100%)").alpha(0.8);
+  var readableColorDark = Color("hsl(0, 0%, 0%)").alpha(0.8);
+
+  var _iterator3 = _createForOfIteratorHelper(labels),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      label = _step3.value;
+      label.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+
+  var _iterator4 = _createForOfIteratorHelper(buttons),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      button = _step4.value;
+      button.style.color = color1.negate().desaturate(0.5);
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+
+  var _iterator5 = _createForOfIteratorHelper(h1s),
+      _step5;
+
+  try {
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      h1 = _step5.value;
+      h1.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    }
+  } catch (err) {
+    _iterator5.e(err);
+  } finally {
+    _iterator5.f();
+  }
+
+  var _iterator6 = _createForOfIteratorHelper(inputs),
+      _step6;
+
+  try {
+    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+      input = _step6.value;
+      input.style.color = color1.negate().desaturate(0.1).lighten(0.2);
+    } // for (box of codeBox) {
+    //     if (color1.isDark() && color2.isDark()) {
+    //         box.style.background = readableColorLight;
+    //     } else if (color1.isLight() && color2.isLight()) {
+    //         box.style.background = readableColorDark;
+    //     } else if (color1.isDark() && color2.isLight()) {
+    //         box.style.background = `linear-gradient(${directionDegree}deg, ${readableColorLight}, ${readableColorDark})`;
+    //     } else if (color1.isLight() && color2.isDark()) {
+    //         box.style.background = `linear-gradient(${directionDegree}deg, ${readableColorDark}, ${readableColorLight})`;
+    //     }
+    // }
+    // if (colorCodes.constructorColors.color1.isDark()) {
+    //     for (label of labels) {
+    //         label.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.1).lighten(0.2);
+    //     }
+    //     for (button of buttons) {
+    //         button.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.5);
+    //     }
+    //     for (h1 of h1s) {
+    //         h1.style.color = "white";
+    //     }
+    //     for (input of inputs) {
+    //         input.style.color = "white";
+    //     }
+    //     for (box of codeBox) {
+    //         box.style.background = colorCodes.constructorColors.color1.negate().desaturate(0.5).alpha(0.4);
+    //     }
+    // } else if (colorCodes.constructorColors.color1.isLight()) {
+    //     for (label of labels) {
+    //         label.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.1).lighten(0.2);
+    //     }
+    //     for (button of buttons) {
+    //         button.style.color = colorCodes.constructorColors.color1.negate().desaturate(0.5);
+    //     }
+    //     for (h1 of h1s) {
+    //         h1.style.color = "black";
+    //     }
+    //     for (input of inputs) {
+    //         input.style.color = "black";
+    //     }
+    //     for (box of codeBox) {
+    //         box.style.background = colorCodes.constructorColors.color1.negate().desaturate(0.5).alpha(0.4);
+    //     }
+    // }
+
+  } catch (err) {
+    _iterator6.e(err);
+  } finally {
+    _iterator6.f();
   }
 }; //Target span elements containing CSS code output text
 
@@ -2381,7 +2490,8 @@ var colorTextInput = function colorTextInput() {
 };
 
 color1TextInput.addEventListener("input", colorTextInput);
-color2TextInput.addEventListener("change", colorTextInput); // buttonTop.addEventListener("click", directionShift);
+color2TextInput.addEventListener("change", colorTextInput);
+masterChange(); // buttonTop.addEventListener("click", directionShift);
 // buttonRight.addEventListener("click", directionShift);
 // buttonBottom.addEventListener("click", directionShift);
 // buttonLeft.addEventListener("click", directionShift);
@@ -2622,7 +2732,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65229" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59022" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
