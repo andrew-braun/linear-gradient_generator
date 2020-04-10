@@ -1,0 +1,22 @@
+{
+  "name": "linear-gradient_generator",
+  "version": "1.0.0",
+  "description": "CSS linear-gradient generator",
+  "main": "index.html",
+  "scripts": {
+    "build": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-braun/linear-gradient_generator.git"
+  },
+  "author": "Andrew Braun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrew-braun/linear-gradient_generator/issues"
+  },
+  "homepage": "https://github.com/andrew-braun/linear-gradient_generator#readme",
+  "dependencies": {
+    "color": "^3.1.2"
+  }
+}
