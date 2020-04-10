@@ -182,7 +182,7 @@ code span {
     padding: 1rem;
     width: 11rem;
 
-    border-width: 0px 2px 0px 2px;
+    border-width: 0px 0px 0px 0px;
     border-style: solid;
     border-color: transparent;
     border-radius: 15px;
@@ -249,7 +249,7 @@ code span {
     background-color: hsla(0, 0%, 0%, 0.1);
     border: 0;
     height: 3rem;
-    width: 5rem;
+    width: 6rem;
     border-radius: 1rem 0 1rem 0;
 
 
