@@ -4,8 +4,8 @@
   "description": "CSS linear-gradient generator",
   "main": "index.html",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url ./"
+    "start": "parcel src/index.html --out-dir ./",
+    "build": "parcel build src/index.html --out-dir build/output ./ --public-url ./"
   },
   "repository": {
     "type": "git",
