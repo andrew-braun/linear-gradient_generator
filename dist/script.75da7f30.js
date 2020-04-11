@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/color-name/index.js":[function(require,module,exports) {
+})({"../node_modules/color-name/index.js":[function(require,module,exports) {
 'use strict'
 
 module.exports = {
@@ -271,7 +271,7 @@ module.exports = {
 	"yellowgreen": [154, 205, 50]
 };
 
-},{}],"node_modules/is-arrayish/index.js":[function(require,module,exports) {
+},{}],"../node_modules/is-arrayish/index.js":[function(require,module,exports) {
 module.exports = function isArrayish(obj) {
 	if (!obj || typeof obj === 'string') {
 		return false;
@@ -282,7 +282,7 @@ module.exports = function isArrayish(obj) {
 			(Object.getOwnPropertyDescriptor(obj, (obj.length - 1)) && obj.constructor.name !== 'String')));
 };
 
-},{}],"node_modules/simple-swizzle/index.js":[function(require,module,exports) {
+},{}],"../node_modules/simple-swizzle/index.js":[function(require,module,exports) {
 'use strict';
 
 var isArrayish = require('is-arrayish');
@@ -313,7 +313,7 @@ swizzle.wrap = function (fn) {
 	};
 };
 
-},{"is-arrayish":"node_modules/is-arrayish/index.js"}],"node_modules/color-string/index.js":[function(require,module,exports) {
+},{"is-arrayish":"../node_modules/is-arrayish/index.js"}],"../node_modules/color-string/index.js":[function(require,module,exports) {
 /* MIT license */
 var colorNames = require('color-name');
 var swizzle = require('simple-swizzle');
@@ -549,7 +549,7 @@ function hexDouble(num) {
 	return (str.length < 2) ? '0' + str : str;
 }
 
-},{"color-name":"node_modules/color-name/index.js","simple-swizzle":"node_modules/simple-swizzle/index.js"}],"node_modules/color/node_modules/color-name/index.js":[function(require,module,exports) {
+},{"color-name":"../node_modules/color-name/index.js","simple-swizzle":"../node_modules/simple-swizzle/index.js"}],"../node_modules/color/node_modules/color-name/index.js":[function(require,module,exports) {
 'use strict'
 
 module.exports = {
@@ -703,7 +703,7 @@ module.exports = {
 	"yellowgreen": [154, 205, 50]
 };
 
-},{}],"node_modules/color/node_modules/color-convert/conversions.js":[function(require,module,exports) {
+},{}],"../node_modules/color/node_modules/color-convert/conversions.js":[function(require,module,exports) {
 /* MIT license */
 var cssKeywords = require('color-name');
 
@@ -1573,7 +1573,7 @@ convert.rgb.gray = function (rgb) {
 	return [val / 255 * 100];
 };
 
-},{"color-name":"node_modules/color/node_modules/color-name/index.js"}],"node_modules/color/node_modules/color-convert/route.js":[function(require,module,exports) {
+},{"color-name":"../node_modules/color/node_modules/color-name/index.js"}],"../node_modules/color/node_modules/color-convert/route.js":[function(require,module,exports) {
 var conversions = require('./conversions');
 
 /*
@@ -1672,7 +1672,7 @@ module.exports = function (fromModel) {
 };
 
 
-},{"./conversions":"node_modules/color/node_modules/color-convert/conversions.js"}],"node_modules/color/node_modules/color-convert/index.js":[function(require,module,exports) {
+},{"./conversions":"../node_modules/color/node_modules/color-convert/conversions.js"}],"../node_modules/color/node_modules/color-convert/index.js":[function(require,module,exports) {
 var conversions = require('./conversions');
 var route = require('./route');
 
@@ -1752,7 +1752,7 @@ models.forEach(function (fromModel) {
 
 module.exports = convert;
 
-},{"./conversions":"node_modules/color/node_modules/color-convert/conversions.js","./route":"node_modules/color/node_modules/color-convert/route.js"}],"node_modules/color/index.js":[function(require,module,exports) {
+},{"./conversions":"../node_modules/color/node_modules/color-convert/conversions.js","./route":"../node_modules/color/node_modules/color-convert/route.js"}],"../node_modules/color/index.js":[function(require,module,exports) {
 'use strict';
 
 var colorString = require('color-string');
@@ -2236,7 +2236,7 @@ function zeroArray(arr, length) {
 
 module.exports = Color;
 
-},{"color-string":"node_modules/color-string/index.js","color-convert":"node_modules/color/node_modules/color-convert/index.js"}],"script.js":[function(require,module,exports) {
+},{"color-string":"../node_modules/color-string/index.js","color-convert":"../node_modules/color/node_modules/color-convert/index.js"}],"script.js":[function(require,module,exports) {
 function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2736,7 +2736,7 @@ buttonHSLA.addEventListener("click", convertColorCodes);
 masterChange(); //Uncomment below to re-enable scoping
 // }
 // )();
-},{"color":"node_modules/color/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"color":"../node_modules/color/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2764,7 +2764,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60217" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62177" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -2940,5 +2940,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
-//# sourceMappingURL=script.75da7f30.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
+//# sourceMappingURL=/script.75da7f30.js.map
