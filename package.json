@@ -5,8 +5,8 @@
   "main": "index.html",
   "scripts": {
     "build": "parcel index.html",
-    "git-build": "parcel src/index.html --out-dir docs --public-url ./",
-    "git-pages": "git subtree push --prefix dist origin gh-pages"
+    "predeploy": "rm -rf dist && parcel build index.html",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "color": "^3.1.2"
   },
   "devDependencies": {
-    "cssnano": "^4.1.10"
+    "cssnano": "^4.1.10",
+    "gh-pages": "^2.2.0"
   }
 }
