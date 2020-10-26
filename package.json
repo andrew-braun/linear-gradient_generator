@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/andrew-braun/linear-gradient_generator#readme",
   "dependencies": {
-    "color": "^3.1.3"
+    "color": "^3.1.3",
+    "parcel-bundler": "^1.12.4"
   },
   "devDependencies": {
     "cssnano": "^4.1.10",
