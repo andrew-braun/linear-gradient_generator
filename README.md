@@ -1,4 +1,4 @@
-# GeoBeerMap
+# Linear Gradient Generatorgit
 
 A basic CSS linear gradient generator that allows you to choose or enter two colors and returns the corresponding CSS code for a linear gradient in HSL, RGB, and hex.
 

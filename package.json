@@ -1,29 +1,30 @@
 {
-  "name": "linear-gradient_generator",
-  "version": "1.0.0",
-  "description": "CSS linear-gradient generator",
+	"name": "linear-gradient_generator",
+	"version": "1.0.0",
+	"description": "CSS linear-gradient generator",
   "main": "index.html",
-  "scripts": {
-    "build": "parcel index.html",
-    "predeploy": "rm -rf dist && parcel build index.html",
-    "deploy": "gh-pages -d dist"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andrew-braun/linear-gradient_generator.git"
-  },
-  "author": "Andrew Braun",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/andrew-braun/linear-gradient_generator/issues"
-  },
-  "homepage": "https://github.com/andrew-braun/linear-gradient_generator#readme",
-  "dependencies": {
-    "color": "^3.1.3",
-    "parcel-bundler": "^1.12.4"
-  },
-  "devDependencies": {
-    "cssnano": "^4.1.10",
-    "gh-pages": "^2.2.0"
-  }
+  "homepage": "https://andrew-braun.github.io/linear-gradient_generator/",
+	"scripts": {
+		"build": "parcel index.html",
+		"predeploy": "rm -rf dist && parcel build index.html --public-url /linear-gradient_generator/",
+		"deploy": "gh-pages -d dist"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/andrew-braun/linear-gradient_generator.git"
+	},
+	"author": "Andrew Braun",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/andrew-braun/linear-gradient_generator/issues"
+	},
+	"homepage": "https://github.com/andrew-braun/linear-gradient_generator#readme",
+	"dependencies": {
+		"color": "^3.1.3",
+		"parcel-bundler": "^1.12.4"
+	},
+	"devDependencies": {
+		"cssnano": "^4.1.10",
+		"gh-pages": "^2.2.0"
+	}
 }
